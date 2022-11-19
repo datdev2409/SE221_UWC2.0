@@ -4,7 +4,7 @@ const PORT = 3000
 
 // DB connect
 const Sequelize = require('sequelize')
-const sequelize = new Sequelize('UWC', 'root', '123456789', {
+const sequelize = new Sequelize('UWC', 'admin', '123', {
   host: 'db',
   dialect: 'mysql'
 })
