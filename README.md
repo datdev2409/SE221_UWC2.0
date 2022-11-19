@@ -26,12 +26,31 @@ Create new branch in local machine
 
   `git checkout task-management-page`
 
-***Step 3***. Coding and commit code
+**Step 3**. Coding and commit code
 
-***Step 4***. Push to new branch in github
+**Step 4**. Push to new branch in github
  `git push -u origin task-managemnet-page`
   
   ***!!!DO NOT PUSH INTO MAIN BRANCH!!!***
 
 
 ### For back-end team
+
+**Step 1** Install docker and docker-compose
+
+Follow these step in [link](https://docs.docker.com/engine/install/) to install docker 
+
+Install docker-desktop
+[docker-desktop-install](https://docs.docker.com/compose/install/)
+
+**Step 2** Clone the source code
+
+**Step 3** Coding
+
+Run `docker-compose up` to start project
+
+Run `docker-compose down` to stop project
+
+**Step 4** Commit and push code
+
+Read step2,3,4 in front-end team to commit and push code
