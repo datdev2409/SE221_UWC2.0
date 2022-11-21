@@ -44,6 +44,12 @@ const ColTask = sequelize.define('ColTask', {
       key: 'id',
     },
   },
+  finishedAt: {
+    type: DataTypes.DATE
+  },
+  acceptedAt: {
+    type: DataTypes.DATE
+  }
 });
 
 module.exports = ColTask;

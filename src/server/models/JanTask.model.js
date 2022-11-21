@@ -35,6 +35,12 @@ const JanTask = sequelize.define('JanTask', {
       model: MCP,
       key: 'id'
     }
+  },
+  finishedAt: {
+    type: DataTypes.DATE
+  },
+  acceptedAt: {
+    type: DataTypes.DATE
   }
 })
 
