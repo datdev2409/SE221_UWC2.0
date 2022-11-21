@@ -9,13 +9,13 @@ const sequelize = new Sequelize(database, username, password, {
   dialect,
 });
 
-module.exports = () => {
-  sequelize
-    .authenticate()
-    .then(() => {
-      console.log('DB is connected');
-    })
-    .catch((error) => {
-      console.error('Unable to connect DB', error);
-    });
-};
+sequelize.testDBConnect = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('DB is connected');
+  } catch (err) {
+    console.error('Unable to connect DB', err);
+  }
+}
+
+module.exports = sequelize
