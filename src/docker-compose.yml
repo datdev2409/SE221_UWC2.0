@@ -7,8 +7,6 @@ services:
     ports:
       - 4000:4000
     container_name: client
-    volumes:
-      - ./client:/client
     networks:
       - client_server
     depends_on:
@@ -21,6 +19,7 @@ services:
       - ${SERVER_PORT}:${SERVER_PORT}
     volumes:
       - ./server:/server
+      - server_nodemodules:/server/node_modules/
     networks:
       - client_server
       - db_server
@@ -51,6 +50,8 @@ services:
 
 
 volumes:
+  server_nodemodules:
+  client_nodemodules:
   db:
 
 networks:
