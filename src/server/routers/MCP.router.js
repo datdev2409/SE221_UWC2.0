@@ -1,24 +1,16 @@
 const express = require('express')
 const router = express.Router()
+const MCPController = require('../controllers/MCP.controller')
 
-router.get('/', (req, res) => {
-  res.send('Get all MCPs')
-})
 
-router.get('/:id', (req, res) => {
-  res.send('Get MCP by id')
-})
+router.get('/', MCPController.getAllMCPs);
 
-router.post('/', (req, res) => {
-  res.send('Create MCP')
-})
+router.get('/:id', MCPController.getMCP);
 
-router.delete('/:id', (req, res) => {
-  res.send('Delete MCP')
-})
+router.post('/', MCPController.createMCP);
 
-router.patch('/:id', (req, res) => {
-  res.send('Update MCP')
-})
+router.delete('/:id', MCPController.removeMCP);
+
+router.patch('/:id', MCPController.updateMCP);
 
 module.exports = router
