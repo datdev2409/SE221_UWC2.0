@@ -32,7 +32,7 @@ exports.createMCP = async (req, res) => {
             });
     }
     
-    const new_MCP = await MCP.create({
+    const newMCP = await MCP.create({
         long: req.body.long,
         lat: req.body.lat,
         isFull: req.body.isFull,
@@ -40,7 +40,7 @@ exports.createMCP = async (req, res) => {
     });
     res.json({
         status: 'success',
-        data: new_MCP
+        data: newMCP
     })
     
 }
@@ -50,7 +50,7 @@ exports.createMCP = async (req, res) => {
 //-----------UPDATE-------------//
 exports.updateMCP = async (req, res) => {
   const id = req.params.id;
-  const Updating_MCP = await MCP.update({
+  const updatingMCP = await MCP.update({
         long: req.body.long,
         lat: req.body.lat,
         isFull: req.body.isFull,
@@ -62,13 +62,13 @@ exports.updateMCP = async (req, res) => {
   });
   res.json({
     status: 'success',
-    data: Updating_MCP
+    data: updatingMCP
   })
 }
 
 exports.update_longlat_MCP = async (req, res) => {
   const id = req.params.id;
-  const Updating_longlat_MCP = await MCP.update({
+  const updatingLongLatMCP = await MCP.update({
         long: req.body.long,
         lat: req.body.lat,
   }, {
@@ -78,13 +78,13 @@ exports.update_longlat_MCP = async (req, res) => {
   });
   res.json({
     status: 'success',
-    data: Updating_longlat_MCP
+    data: updatingLongLatMCP
   })
 }
 
 exports.update_status_MCP = async (req, res) => {
   const id = req.params.id;
-  const Updating_status_MCP = await MCP.update({
+  const updatingStatusMCP = await MCP.update({
        isFull: req.body.isFull
   }, {
     where: {
@@ -93,7 +93,7 @@ exports.update_status_MCP = async (req, res) => {
   });
   res.json({
     status: 'success',
-    data: Updating_status_MCP
+    data: updatingStatusMCP
   })
 }
 
@@ -129,7 +129,7 @@ exports.removeMCP = async (req, res) =>{
 }
 
 //-------------REMOVE ALL-----------//
-exports.remove_all_MCP = async (req, res) =>{
+exports.removeAllMCP = async (req, res) =>{
   const destroy = await User.destroy({
     truncate: true
   });
