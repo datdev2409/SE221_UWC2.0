@@ -1,14 +1,7 @@
 const MCP = require('../models/MCP.model');
-const MCP = require('../models/MCP.model')
 
 //-----------GET ALL-------------//
-exports.getAllMCPs = async (req, res) => {
-  const MCPs = await MCP.findAll();
-  res.json({
-    status: 'success',
-    data: MCPs
-  })
-}
+
 
 
 //-----------GET ONE BY ID-------------//
