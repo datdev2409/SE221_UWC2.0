@@ -12,11 +12,7 @@ exports.getAllMCPs = async (req, res) => {
 
 //-----------GET ONE BY ID-------------//
 exports.getMCP = async (req, res) => {
-  const MCP = await MCP.findAll({
-    where: {
-      id: req.params.id
-    }
-  })
+  const MCP = await MCP.findByPk(req.params.id);
   res.json ({
     status: 'success',
     data: MCP
@@ -65,52 +61,6 @@ exports.updateMCP = async (req, res) => {
   })
 }
 
-exports.update_longlat_MCP = async (req, res) => {
-  const id = req.params.id;
-  const updatingLongLatMCP = await MCP.update({
-        long: req.body.long,
-        lat: req.body.lat,
-  }, {
-    where: {
-      id: id
-    }
-  });
-  res.json({
-    status: 'success',
-    data: updatingLongLatMCP
-  })
-}
-
-exports.update_status_MCP = async (req, res) => {
-  const id = req.params.id;
-  const updatingStatusMCP = await MCP.update({
-       isFull: req.body.isFull
-  }, {
-    where: {
-      id: id
-    }
-  });
-  res.json({
-    status: 'success',
-    data: updatingStatusMCP
-  })
-}
-
-exports.update_type_MCP = async (req, res) => {
-  const id = req.params.id;
-  const Updating_status_MCP = await MCP.update({
-      type: req.body.type
-  }, {
-    where: {
-      id: id
-    }
-  });
-  res.json({
-    status: 'success',
-    data: Updating_status_MCP
-  })
-}
-
 
 //-----------REMOVE-------------//
 
@@ -124,16 +74,5 @@ exports.removeMCP = async (req, res) =>{
   res.json({
     status: 'success',
     data: removing
-  })
-}
-
-//-------------REMOVE ALL-----------//
-exports.removeAllMCP = async (req, res) =>{
-  const destroy = await User.destroy({
-    truncate: true
-  });
-  res.json({
-    status: 'success',
-    data: destroy
   })
 }
