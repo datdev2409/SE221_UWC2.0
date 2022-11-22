@@ -17,6 +17,7 @@ const vehicleRouter = require('./routers/vehicle.router')
 const janTaskRouter = require('./routers/janTask.router')
 const colTaskRouter = require('./routers/colTask.router')
 const routeRouter = require('./routers/route.router')
+const errorHandler = require('./middlewares/errorHandler')
 
 
 // DB connect
@@ -37,6 +38,8 @@ app.use('/api/vehicles', vehicleRouter)
 app.use('/api/routes', routeRouter)
 app.use('/api/tasks/collector', colTaskRouter)
 app.use('/api/tasks/janitor', janTaskRouter)
+
+app.use(errorHandler)
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`) 
