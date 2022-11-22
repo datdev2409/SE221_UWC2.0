@@ -1,5 +1,4 @@
 const MCP = require('../models/MCP.model');
-const MCP = require('../models/MCP.model')
 
 //-----------GET ALL-------------//
 exports.getAllMCPs = async (req, res) => {
