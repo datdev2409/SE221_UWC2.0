@@ -4,123 +4,115 @@ const MCP = require('../models/MCP.model');
 exports.getAllMCPs = async (req, res) => {
   try {
     const MCPs = await MCP.findAll();
-    console.log("Get all MCPs success.")
+
     res.json({
       status: 'success',
-      data: MCPs
-    })
+      data: MCPs,
+    });
   } catch (err) {
-    next(err)
+    next(err);
   }
-}
-
+};
 
 //-----------GET ONE BY ID-------------//
 exports.getMCP = async (req, res) => {
-  if(!req.body)
-  {
-      console.err(err)
-      res.status(400).json({
-        status: 'error',
-        message: "Content can not be empty!"
-      });
-  }
   try {
-    const MCPByID = await MCP.findByPk(req.params.id);
-    if (!MCPByID){
+    const id = req.params.id;
+    if (!id) throw new Error('You must input id field');
+
+    const queryMCP = await MCP.findByPk(req.params.id);
+    if (!queryMCP) {
       res.json({
         status: '404',
-        message: 'MCP ID not found'
-      })
+        message: 'MCP ID not found',
+      });
     }
-    else {
-      res.json ({
-        status: 'success',
-        data: MCPByID
-      })
-    }  
+
+    res.json({
+      status: 'success',
+      data: queryMCP,
+    });
   } catch (err) {
-    next(err)
+    next(err);
   }
-}
+};
 
 //-----------CREATE-------------//
 exports.createMCP = async (req, res) => {
-    if (!req.body) {
-      console.err(err)
-      res.json({
-        status: '400',
-        message: "Content can not be empty!"
-      });
-    }
-    else {
-    try {
-        console.log(req.body)
-        const newMCP = await MCP.create({
-          long: req.body.long,
-          lat: req.body.lat,
-          isFull: req.body.isFull,
-          type: req.body.type,
-        });
-        res.json({
-          status: 'success',
-          data: newMCP
-        })
-      }catch (err) {
-        next(err)
-      }
-    }
-}
-
-
+  if (!req.body) {
+    console.err(err);
+    res.json({
+      status: '400',
+      message: 'Content can not be empty!',
+    });
+  }
+  try {
+    const newMCP = await MCP.create({
+      long: req.body.long,
+      lat: req.body.lat,
+      isFull: req.body.isFull,
+      type: req.body.type,
+    });
+    res.json({
+      status: 'success',
+      data: newMCP,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 
 //-----------UPDATE-------------//
 exports.updateMCP = async (req, res) => {
   try {
     const id = req.params.id;
-    const updatingMCP = await MCP.update({
+    if (!id) throw new Error('You must input id field');
+
+    const updatingMCP = await MCP.update(
+      {
         long: req.body.long,
         lat: req.body.lat,
         isFull: req.body.isFull,
-        type: req.body.type
-  }, {
-    where: {
-      id: id
-    }
-  });
-  res.json({
-    status: 'success',
-    data: updatingMCP
-  })  
+        type: req.body.type,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+    res.json({
+      status: 'success',
+      data: updatingMCP,
+    });
   } catch (err) {
-    next(err)
-  }  
-}
-
+    next(err);
+  }
+};
 
 //-----------REMOVE-------------//
 
-exports.removeMCP = async (req, res) =>{
+exports.removeMCP = async (req, res) => {
   try {
     const id = req.params.id;
-  const removing = await MCP.destroy({
-    where: {
-      id: id
+    if (!id) throw new Error('You must input id field');
+
+    const removing = await MCP.destroy({
+      where: {
+        id: id,
+      },
+    });
+    if (removing == 0) {
+      res.json({
+        status: '204',
+      });
+    } else {
+      res.json({
+        status: 'success',
+        data: removing,
+      });
     }
-  });
-  if (removing == 0)
-  {
-    res.json({
-      status: '204',
-    })
-  }
-  else {
-  res.json({
-      status: 'success',
-      data: removing
-    })
-  }  
   } catch (err) {
-    next(err)
+    next(err);
   }
-}
+};
