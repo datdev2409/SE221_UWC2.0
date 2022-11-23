@@ -16,22 +16,7 @@ exports.getAllMCPs = async (req, res) => {
 
 //-----------GET ONE BY ID-------------//
 exports.getMCP = async (req, res) => {
-  if (!req.body){
-    console.err(err)
-    res.status(400).json({
-        status: 'error',
-        message: "Content can not be empty!"
-      });
-  }
-  if(err){
-    if(err.kind === "not_found")
-    {
-      res.status(404).json({
-        status:'error',
-        message: "Not found MCP with ID " + req.params.id
-      })
-    }
-  }  
+
   try {
     const MCP = await MCP.findByPk(req.params.id);
     res.json ({
