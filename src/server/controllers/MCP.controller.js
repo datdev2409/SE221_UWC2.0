@@ -2,11 +2,12 @@ const MCP = require('../models/MCP.model');
 
 //-----------GET ALL-------------//
 exports.getAllMCPs = async (req, res) => {
+  console.log(req)
   try {
     const MCPs = await MCP.findAll();
-    console.log("success");
+    console.log("Get all MCPs success.")
     res.json({
-      status: 'succehelloss',
+      status: 'success',
       data: MCPs
     })
   } catch (err) {
@@ -17,14 +18,22 @@ exports.getAllMCPs = async (req, res) => {
 
 //-----------GET ONE BY ID-------------//
 exports.getMCP = async (req, res) => {
+  if(!req.body)
+  {
+      console.err(err)
+      res.status(400).json({
+        status: 'error',
+        message: "Content can not be empty!"
+      });
+  }
   try {
     const MCPByID = await MCP.findByPk(req.params.id);
     res.json ({
       status: 'success',
-      data: MCP
+      data: MCPByID
     })  
   } catch (err) {
-    console.error("Error")
+    next(err)
   }
 }
 
@@ -38,6 +47,7 @@ exports.createMCP = async (req, res) => {
       });
     }
     try {
+      console.log(req.body)
       const newMCP = await MCP.create({
         long: req.body.long,
         lat: req.body.lat,
@@ -57,15 +67,6 @@ exports.createMCP = async (req, res) => {
 
 //-----------UPDATE-------------//
 exports.updateMCP = async (req, res) => {
-  if(err){
-    if(err.kind === "not_found")
-    {
-      res.status(404).json({
-        status:'error',
-        message: "Not found MCP with ID " + req.params.id
-      })
-    }
-  }
   try {
     const id = req.params.id;
     const updatingMCP = await MCP.update({
@@ -91,15 +92,6 @@ exports.updateMCP = async (req, res) => {
 //-----------REMOVE-------------//
 
 exports.removeMCP = async (req, res) =>{
-  if(err){
-    if(err.kind === "not_found")
-    {
-      res.status(404).json({
-        status:'error',
-        message: "Not found MCP with ID " + req.params.id
-      })
-    }
-  }
   try {
     const id = req.params.id;
   const removing = await MCP.destroy({
