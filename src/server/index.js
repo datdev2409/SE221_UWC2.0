@@ -1,9 +1,14 @@
 const express = require('express')
 
-// Sequelize
 const sequelize = require('./config/sequelize')
 const {testDBConnect} = require('./config/sequelize')
-const models = require('./models')
+const app = express()
+const PORT = process.env.PORT || 3000
+const User = require('./models/User.model')
+const MCP = require('./models/MCP.model')
+const Route = require('./models/Route.model')
+const JanTask = require('./models/JanTask.model')
+const ColTask = require('./models/ColTask.model')
 
 // Router
 const userRouter = require('./routers/user.router')
@@ -14,8 +19,6 @@ const colTaskRouter = require('./routers/colTask.router')
 const routeRouter = require('./routers/route.router')
 const errorHandler = require('./middlewares/errorHandler')
 
-const app = express()
-const PORT = process.env.PORT || 3000
 
 // DB connect
 testDBConnect();
@@ -26,7 +29,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 app.get('/', (req, res) => {
-  res.send('Home Page')
+  res.send('Hello, Dat!')
 })
 
 app.use('/api/users', userRouter)
