@@ -4,8 +4,9 @@ const MCP = require('../models/MCP.model');
 exports.getAllMCPs = async (req, res) => {
   try {
     const MCPs = await MCP.findAll();
+    console.log("success");
     res.json({
-      status: 'success',
+      status: 'succehelloss',
       data: MCPs
     })
   } catch (err) {
@@ -16,15 +17,14 @@ exports.getAllMCPs = async (req, res) => {
 
 //-----------GET ONE BY ID-------------//
 exports.getMCP = async (req, res) => {
-
   try {
-    const MCP = await MCP.findByPk(req.params.id);
+    const MCPByID = await MCP.findByPk(req.params.id);
     res.json ({
       status: 'success',
       data: MCP
     })  
   } catch (err) {
-    next(err)
+    console.error("Error")
   }
 }
 
