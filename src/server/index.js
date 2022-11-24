@@ -23,7 +23,7 @@ const errorHandler = require('./middlewares/errorHandler')
 // DB connect
 testDBConnect();
 
-sequelize.sync({ force: true });
+sequelize.sync({ alter: true });
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
