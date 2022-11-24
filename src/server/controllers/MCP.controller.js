@@ -6,13 +6,13 @@ exports.getAllMCPs = async (req, res) => {
     const MCPs = await MCP.findAll();
 
     res.json({
-      status: 'success',
+      status: 'success',  
       data: MCPs,
     });
   } catch (err) {
     next(err);
   }
-};
+  };
 
 //-----------GET ONE BY ID-------------//
 exports.getMCP = async (req, res) => {

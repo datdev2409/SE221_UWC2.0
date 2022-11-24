@@ -1,25 +1,16 @@
 const express = require('express')
 const router = express.Router()
+const vehicleController = require('../controllers/vehicle.controller')
 
-router.get('/', (req, res) => {
-  res.send('Get all vehicles')
-})
+router.get('/', vehicleController.getAllVehicles);
 
-router.get('/:id', (req, res) => {
-  res.send('Get vehicle by id')
-})
+router.get('/:id', vehicleController.getVehicle);
 
-router.post('/', (req, res) => {
-  res.send('Create vehicle')
-})
+router.post('/', vehicleController.createVehicle);
 
-router.delete('/:id', (req, res) => {
-  res.send('Delete vehicle')
-})
+router.delete('/:id', vehicleController.removeVehicle);
 
-router.patch('/:id', (req, res) => {
-  res.send('Update vehicle')
-})
+router.patch('/:id', vehicleController.updateVehicle);
 
 module.exports = router
 
