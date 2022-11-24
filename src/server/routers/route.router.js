@@ -1,13 +1,11 @@
 const express = require('express')
 const router = express.Router()
+const {getAllRoutes, getRouteByID} = require('../controllers/route.controller')
 
-router.get('/', (req, res) => {
-  res.send('Get all routes')
-})
+router.get('/', getAllRoutes)
 
-router.get('/:id', (req, res) => {
-  res.send('Get route by id')
-})
+router.get('/:id', getRouteByID)
+
 
 router.post('/', (req, res) => {
   res.send('Create route')

@@ -11,6 +11,7 @@ const Route = sequelize.define('Route', {
   MCP_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    primaryKey: true,
     references: {
       model: MCP,
       key: 'id'
