@@ -1,56 +1,58 @@
-const sequelize = require('sequelize');
-const Route = require('../models/Route.model')
+const routeService = require('../services/route.service')
 const catchAsync = require("../utils/catchAsync");
 
-function createRoute(checkPoints) {
-  if (!checkPoints) return []
-
-  // Check those checkPoints have the same ID
-  const routeId = checkPoints[0].id
-  checkPoints = checkPoints.filter(cp => cp.id == routeId)
-
-  // Remove route id
-  checkPoints = checkPoints.map(cp => {
-    return {
-      MCP_id: cp.MCP_id,
-      order: cp.order
-    }
-  })
-
-  checkPoints = checkPoints.map(cp => Object.assign({}, {
-    MCP_id: cp.MCP_id,
-    order: cp.order
-  }))
-
-  return {
-    id: routeId,
-    check_point: checkPoints
-  }
-}
-
 exports.getAllRoutes = catchAsync(async (req, res, next) => {
-  const routes = await Route.findAll({
-    attributes: ['id', 'MCP_id', 'order'],
-  })
+  const routes = await routeService.getAllRoutes()
 
   res.status(200).json({
     status: 'success',
-    data: routes
+    data: {
+      length: routes.length,
+      routes: routes
+    }
   })
 
 })
 
 exports.getRouteByID = catchAsync(async (req, res, next) => {
-  const routeId = req.params.id
-  const checkPoints = await Route.findAll({
-    where: { id: routeId },
-    order: sequelize.col('order')
-  })
-
-  const route = createRoute(checkPoints)
+  const routeID = req.params.id
+  const route = await routeService.getRouteByID(routeID)
 
   res.status(200).json({
     status: 'success',
-    data: route
+    route: route
+  })
+})
+
+exports.createRoute = catchAsync(async (req, res, next) => {
+  const route = await routeService.createRoute(req.body.mcp_list)
+
+  res.status(200).json({
+    status: 'success',
+    route
+  })
+})
+
+exports.deleteRoute = catchAsync(async (req, res, next) => {
+  const routeID = req.params.id
+
+  await routeService.deleteRoute(routeID)
+
+  res.status(204).json({
+    status: 'success',
+    message: `Deleted route with id ${routeID}`
+  })
+})
+
+exports.updateRoute = catchAsync(async (req, res, next) => {
+  const mcps = req.body.mcp_list
+  const routeID = req.params.id
+
+  await routeService.deleteRoute(routeID)
+  const updatedRoute = await routeService.createRoute(mcps, routeID)
+
+  res.status(200).json({
+    status: 'success',
+    route: updatedRoute
   })
 })
