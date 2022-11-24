@@ -1,0 +1,25 @@
+.navItem {
+  display: flex;
+  gap: 12px;
+
+  padding: 6px 12px;
+  border-radius: 5px;
+
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 2.4rem;
+  text-decoration: none;
+
+  color: var(--text);
+}
+
+.navItem:hover {
+  background-color: var(--gray);
+}
+
+.active {
+  font-weight: 500;
+  color: var(--primary);
+  background-color: var(--primary-light);
+}
+
