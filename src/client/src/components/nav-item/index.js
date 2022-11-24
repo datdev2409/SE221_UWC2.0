@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { Link, useLocation } from "react-router-dom"
-import styles from "./NavItem.module.css"
+import styles from "./nav-item.module.css"
 
 function NavItem({ text, path }) {
   const location = useLocation()

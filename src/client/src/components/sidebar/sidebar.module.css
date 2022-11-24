@@ -1,11 +1,21 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 6px;
 
   width: 300px;
   height: 100vh;
 
   padding: 20px 16px;
   border-right: 1px solid black;
+}
+
+.logo {
+  padding: 6px;
+}
+
+.heading {
+  font-size: 4rem;
+  padding: 0 6px;
+  color: var(--primary);
 }

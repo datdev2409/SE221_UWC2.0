@@ -5,14 +5,14 @@ import {
   RouterProvider
 } from "react-router-dom"
 
+import './index.css'
 import App from './App'
-import GlobalStyles from "./components/GlobalStyles"
-import DefaultLayout from "./layouts/DefaultLayout"
+import HomePage from './pages/homepage'
 
 const router = createRouter([
   {
     path: "/",
-    element: <DefaultLayout />,
+    element: <HomePage />,
     children: [
       {
         path: "/",
@@ -37,8 +37,6 @@ const router = createRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <React.StrictMode>
-    <GlobalStyles>
-      <RouterProvider router={router} />
-    </GlobalStyles>
+    <RouterProvider router={router} />
   </React.StrictMode>
 )
