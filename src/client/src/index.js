@@ -6,17 +6,19 @@ import {
 } from "react-router-dom"
 
 import './index.css'
+
 import App from './App'
-import HomePage from './pages/homepage'
+import DefaultLayout from "./layouts/default/DefaultLayout";
+import BoardView from "./pages/dashboard/BoardView";
 
 const router = createRouter([
   {
     path: "/",
-    element: <HomePage />,
+    element: <DefaultLayout />,
     children: [
       {
         path: "/",
-        element: <App />
+        element: <BoardView />
       },
       {
         path: "/employee",
@@ -27,7 +29,7 @@ const router = createRouter([
         element: <App />
       },
       {
-        path: "/area",
+        path: "/area-and-mcps",
         element: <App />
       },
     ]
