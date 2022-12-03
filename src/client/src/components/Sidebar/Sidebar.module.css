@@ -19,9 +19,8 @@
 .header {
   display: flex;
   align-items: center;
-
-  padding-top: 12px;
-  height: 60px;
+  height: 80px;
+  border-bottom: 2px solid #ddd;
 }
 
 .heading {
@@ -30,5 +29,4 @@
   font-size: 4rem;
   padding: 0 6px;
   color: var(--primary);
-  border-bottom: 2px solid #ddd;
 }
