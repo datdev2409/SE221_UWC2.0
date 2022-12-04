@@ -1,21 +1,23 @@
+import BoardColumn from "./components/BoardColumn"
 import tasks from "../../data/task"
-import Task from "../../components/Task/Task"
-import FilterBar from "./FilterBar"
+import Task from "./components/Task"
 
 function BoardView() {
+  const todoTasks = tasks.filter(({status}) => status === 'todo')
+  const doingTasks = tasks.filter(({status}) => status === 'doing')
+  const doneTasks = tasks.filter(({status}) => status === 'done')
+
   return (
-    <div>
-      <FilterBar />
-      {tasks.map(({ type, name, team, time, location, description }, index) => (
-        <Task
-          type={type}
-          name={name}
-          team={team}
-          time={time}
-          location={location}
-          description={description}
-        />
-      ))}
+    <div className="board">
+      <BoardColumn title="Todo">
+        {todoTasks.map((element, idx) => <Task key={idx} task={element} />)}
+      </BoardColumn>
+      <BoardColumn title="In Progress">
+        {doingTasks.map((element, idx) => <Task key={idx} task={element} />)}
+      </BoardColumn>
+      <BoardColumn title="Done">
+        {doneTasks.map((element, idx) => <Task key={idx} task={element} />)}
+      </BoardColumn>
     </div>
   )
 }

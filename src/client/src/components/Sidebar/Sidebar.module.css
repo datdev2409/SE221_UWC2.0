@@ -7,7 +7,7 @@
   height: 100vh;
 
   padding: 0px 6px;
-  background-color: #f4f4f4;
+  background-color: var(--bg-gray);
 
   font-size: 1.6rem;
 }
