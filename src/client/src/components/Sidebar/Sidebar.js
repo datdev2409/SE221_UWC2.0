@@ -1,34 +1,53 @@
-import { useLocation } from "react-router-dom"
-
-import SidebarItem from './SidebarItem'
+import SidebarItem from "./SidebarItem"
 import styles from "./Sidebar.module.css"
+import { Box, MenuList, Typography } from "@mui/material"
+import {
+  DashboardCustomizeRounded,
+  LocalShipping,
+  PeopleAlt,
+  Place
+} from "@mui/icons-material"
 
 const items = [
-  { text: "Dashboard", path: "/" },
-  { text: "Employee", path: "/employee" },
-  { text: "Vehicle", path: "/vehicle" },
-  { text: "Area & MCPs", path: "/area-and-mcps" }
+  {
+    text: "Dashboard",
+    path: "/",
+    icon: <DashboardCustomizeRounded />
+  },
+  {
+    text: "Employee",
+    path: "/employee",
+    icon: <PeopleAlt />
+  },
+  {
+    text: "Vehicle",
+    path: "/vehicle",
+    icon: <LocalShipping />
+  },
+  {
+    text: "Area & MCPs",
+    path: "/area-and-mcps",
+    icon: <Place />
+  }
 ]
 
 function Sidebar() {
-  const pathname = useLocation().pathname
-
   return (
     <div className={styles.sidebar}>
-      <header className={styles.header}>
-        <h1 className={styles.heading}>UWC.io</h1>
-      </header>
+      <Box sx={{ height: "80px", borderBottom: "2px solid #ddd" }}>
+        <Typography
+          sx={{ lineHeight: "80px", textAlign: "center", fontWeight: 700 }}
+          color="#1A73E8"
+          variant="h3">
+          UWC.io
+        </Typography>
+      </Box>
 
-      <div>
-        {items.map(({ text, path }, index) => (
-          <SidebarItem
-            key={index}
-            text={text}
-            path={path}
-            isActive={pathname === path}
-          />
+      <MenuList>
+        {items.map((item, index) => (
+          <SidebarItem item={item} key={index} />
         ))}
-      </div>
+      </MenuList>
     </div>
   )
 }

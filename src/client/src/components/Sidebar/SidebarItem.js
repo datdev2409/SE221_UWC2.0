@@ -1,16 +1,20 @@
-import clsx from "clsx"
-import { Link } from "react-router-dom"
-import styles from "./SidebarItem.module.css"
+import { Link, useLocation } from "react-router-dom"
+import { ListItemIcon, ListItemText, MenuItem } from "@mui/material"
 
-function SidebarItem({ text, path, isActive }) {
-  const classes = clsx(styles.navItem, {
-    [styles.active]: isActive
-  })
-
+function SidebarItem({ item }) {
+  const { pathname } = useLocation()
+  const activeStyle = {
+    color: "#1A73E8",
+    backgroundColor: "rgba(26, 115, 232, 10%)"
+  }
   return (
-    <Link className={classes} to={path}>
-      {text}
-    </Link>
+    <MenuItem
+      sx={item.path === pathname ? activeStyle : {}}
+      component={Link}
+      to={item.path}>
+      <ListItemIcon>{item.icon}</ListItemIcon>
+      <ListItemText>{item.text}</ListItemText>
+    </MenuItem>
   )
 }
 

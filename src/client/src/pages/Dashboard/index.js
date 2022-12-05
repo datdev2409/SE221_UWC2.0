@@ -1,11 +1,11 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import FilterBar from './FilterBar'
+import Navbar from './Navbar'
 
 function Dashboard() {
   return (
     <div>
-      <FilterBar />
+      <Navbar />
       <div style={{padding: '12px'}}>
         {<Outlet />}
       </div>

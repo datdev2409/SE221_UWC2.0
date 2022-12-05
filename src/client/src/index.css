@@ -17,10 +17,6 @@
   box-sizing: border-box;
 }
 
-html {
-  font-size: 62.5%;
-}
-
 body {
   margin: 0;
   font-family: 'Roboto', 'sans-serif';
@@ -31,4 +27,30 @@ body {
 
 .heading {
   color: green;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.f-between {
+  justify-content: space-between;
+}
+
+.fx-start {
+  justify-content: flex-start;
+}
+
+.fy-start {
+  align-items: flex-start;
+}
+
+.px-12 {
+  padding: 0 12px;
+}
+
+.g-12 {
+  gap: 12px;
 }

@@ -3,10 +3,10 @@ import { createBrowserRouter as createRouter } from "react-router-dom"
 
 import App from './App'
 import DefaultLayout from "./layouts/default/DefaultLayout";
-import BoardView from "./pages/dashboard/BoardView";
-import Dashboard from "./pages/dashboard/Dashboard"
-import CalendarView from "./pages/dashboard/CalendarView"
-import Timeline from "./pages/dashboard/Timeline";
+import Dashboard from "./pages/Dashboard"
+import BoardView from "./pages/Dashboard/BoardView";
+import CalendarView from './pages/Dashboard/CalendarView'
+import Timeline from './pages/Dashboard/Timeline'
 
 const router = createRouter([
   {
@@ -22,12 +22,12 @@ const router = createRouter([
             element: <BoardView />
           },
           {
-            path: routes.dashboard__timeline,
-            element: <Timeline />
-          },
-          {
             path: routes.dashboard__calendar,
             element: <CalendarView />
+          },
+          {
+            path: routes.dashboard__timeline,
+            element: <Timeline />
           }
         ]
       },

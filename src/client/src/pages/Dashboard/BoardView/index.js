@@ -1,6 +1,6 @@
-import BoardColumn from "./components/BoardColumn"
-import tasks from "../../data/task"
-import Task from "./components/Task"
+import BoardColumn from "./BoardColumn"
+import tasks from "../../../data/task"
+import Task from "./Task"
 
 function BoardView() {
   const todoTasks = tasks.filter(({status}) => status === 'todo')
@@ -8,7 +8,7 @@ function BoardView() {
   const doneTasks = tasks.filter(({status}) => status === 'done')
 
   return (
-    <div className="board">
+    <div className="flex fx-start fy-start g-12">
       <BoardColumn title="Todo">
         {todoTasks.map((element, idx) => <Task key={idx} task={element} />)}
       </BoardColumn>
