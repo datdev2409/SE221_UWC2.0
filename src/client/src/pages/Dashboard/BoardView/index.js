@@ -1,22 +1,40 @@
 import BoardColumn from "./BoardColumn"
-import tasks from "../../../data/task"
 import Task from "./Task"
+import { useEffect, useState } from "react"
+import { getAllTasks } from "../../../firebase/task"
 
 function BoardView() {
-  const todoTasks = tasks.filter(({status}) => status === 'todo')
-  const doingTasks = tasks.filter(({status}) => status === 'doing')
-  const doneTasks = tasks.filter(({status}) => status === 'done')
+  let [tasks, setTasks] = useState([])
+
+  useEffect(() => {
+    async function fetchTasks() {
+      let data = await getAllTasks()
+      setTasks(data)
+    }
+
+    fetchTasks()
+  }, [])
+
+  const filterByStatus = (tasks, status) => {
+    return tasks.filter((task) => task.status === status)
+  }
 
   return (
     <div className="flex fx-start fy-start g-12">
       <BoardColumn title="Todo">
-        {todoTasks.map((element, idx) => <Task key={idx} task={element} />)}
+        {filterByStatus(tasks, "todo").map((element, idx) => (
+          <Task key={idx} task={element} />
+        ))}
       </BoardColumn>
       <BoardColumn title="In Progress">
-        {doingTasks.map((element, idx) => <Task key={idx} task={element} />)}
+        {filterByStatus(tasks, "doing").map((element, idx) => (
+          <Task key={idx} task={element} />
+        ))}
       </BoardColumn>
       <BoardColumn title="Done">
-        {doneTasks.map((element, idx) => <Task key={idx} task={element} />)}
+        {filterByStatus(tasks, "done").map((element, idx) => (
+          <Task key={idx} task={element} />
+        ))}
       </BoardColumn>
     </div>
   )
