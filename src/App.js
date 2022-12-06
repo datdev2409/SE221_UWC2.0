@@ -1,7 +1,8 @@
 import Navbar from "./Navbar"
-import Pricing from "./pages/Pricing"
+import Timeline from "./pages/Timeline"
 import Home from "./pages/Home"
 import Board from "./pages/Board"
+import Calendar from "./pages/Calendar"
 import { Route, Routes } from "react-router-dom"
 
 import "./App.css";
@@ -13,8 +14,9 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/Timeline" element={<Timeline />} />
           <Route path="/board" element={<Board />} />
+          <Route path="/calendar" element={<Calendar/>}/>
         </Routes>
       </div>
     </>

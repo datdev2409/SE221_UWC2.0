@@ -8,7 +8,8 @@ export default function Navbar() {
       </Link>
       <ul>
         <CustomLink to="/board">Board</CustomLink>
-        <CustomLink to="/pricing">Pricing</CustomLink>
+        <CustomLink to="/Timeline">Timeline</CustomLink>
+        <CustomLink to="/Calendar">Calendar</CustomLink>
       </ul>
     </nav>
   )
