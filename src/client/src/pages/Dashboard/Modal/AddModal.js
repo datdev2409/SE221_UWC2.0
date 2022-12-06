@@ -9,7 +9,10 @@ import {
   Autocomplete,
   FormControlLabel,
   Radio,
-  RadioGroup
+  RadioGroup,
+  InputLabel,
+  Select,
+  MenuItem
 } from "@mui/material"
 import DateInput from "../../../components/DateInput"
 import { useFormik } from "formik"
@@ -17,7 +20,7 @@ import { useEffect, useState } from "react"
 import useTaskContext from "../../../context/task/taskHook"
 import { createTask } from "../../../context/task/taskActions"
 import { getAllMCPs } from "../../../firebase/MCP"
-import { getAllEmployees } from "../../../firebase/employee"
+import { getAllEmployees, getEmployee } from "../../../firebase/employee"
 
 function TextInput({ formik, label, name }) {
   return (
@@ -63,14 +66,17 @@ function AddModal({ open, handleClose }) {
   const [address, setAddress] = useState("")
   const [type, setType] = useState("janitor")
   const [MCPList, setMCPList] = useState([])
+
   const [employees, setEmployees] = useState([])
-  const [employee, setEmployee] = useState('')
+  const [employeeId, setEmployeeId] = useState("")
+
+
   const dispatch = useTaskContext()[1]
 
   // Load MCP information
   useEffect(function () {
     getAllMCPs().then((MCPList) => setMCPList(MCPList))
-    getAllEmployees().then(employees => setEmployees(employees))
+    getAllEmployees().then((employees) => setEmployees(employees))
   }, [])
 
   const formik = useFormik({
@@ -81,19 +87,28 @@ function AddModal({ open, handleClose }) {
     },
     onSubmit: (values) => {
       setLoading(true)
-      const task = { ...values, employee, timeStart, timeEnd, address, type }
-      dispatch(createTask(task))
+      const task = {
+        ...values,
+        employeeId,
+        timeStart,
+        timeEnd,
+        address,
+        type
+      }
+
+      getEmployee(employeeId).then(employee => {
+        dispatch(createTask({...task, employee: employee.fullname }))
+        handleClose()
+      })
       setTimeout(() => setLoading(false), 1000)
-      handleClose()
     }
   })
 
   const handleChangeType = (type) => {
     // janitor -> collector
-    if (type === 'collector') {
+    if (type === "collector") {
       setAddress([])
-    }
-    else setAddress('')
+    } else setAddress("")
     setType(type)
   }
 
@@ -106,7 +121,7 @@ function AddModal({ open, handleClose }) {
         </h2>
         <TypeSelectGroup value={type} handleChange={handleChangeType} />
         <TextInput formik={formik} label="Name" name="name" />
-        <Box className="flex g-12 mt-12">
+        <Box className="flex g-24 mt-12 fx-start">
           <DateInput
             value={timeStart}
             label="Start"
@@ -115,16 +130,22 @@ function AddModal({ open, handleClose }) {
           <DateInput value={timeEnd} label="End" handleChange={setTimeEnd} />
         </Box>
 
+        <FormControl fullWidth sx={{marginTop: '12px'}}>
+          <InputLabel id="employee-label">Employee</InputLabel>
+          <Select
+            labelId="employee-label"
+            label='Employee'
+            // sx={{marginTop: '12px'}}
+            value={employeeId}
+            onChange={(e) => setEmployeeId(e.target.value)}>
+            {employees.map(({ id, fullname }) => (
+              <MenuItem key={id} value={id}>{fullname}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
         <Autocomplete
-          sx={{ marginTop: "12px" }}
-          options={employees.map(({id, fullname}) => `${fullname} - ${id}`)}
-          renderInput={(params) => <TextField {...params} label="Employee" />}
-          defaultValue={''}
-          onChange={(e, value) => setEmployee(value)}
-        />
-
-        <Autocomplete hidden={type==='janitor'}
+          hidden={type === "janitor"}
           multiple
           sx={{ marginTop: "12px" }}
           options={MCPList.map((MCP) => MCP.name)}
@@ -133,18 +154,20 @@ function AddModal({ open, handleClose }) {
           onChange={(e, value) => setAddress(value)}
         />
 
-        <Autocomplete hidden={type==='collector'}
+        <Autocomplete
+          hidden={type === "collector"}
           sx={{ marginTop: "12px" }}
-          options={MCPList.map((MCP) => MCP.name)}
+          options={MCPList.map((MCP) => `${MCP.name} - ${MCP.id}`)}
           renderInput={(params) => <TextField {...params} label="Location" />}
-          defaultValue={''}
+          defaultValue={""}
           onChange={(e, value) => setAddress(value)}
         />
 
-        <Autocomplete hidden={type==='janitor'}
+        <Autocomplete
+          hidden={type === "janitor"}
           multiple
           sx={{ marginTop: "12px" }}
-          options={MCPList.map((MCP) => MCP.name)}
+          options={MCPList.map((MCP) => `${MCP.name} - ${MCP.id}`)}
           renderInput={(params) => <TextField {...params} label="Location" />}
           defaultValue={[]}
           onChange={(e, value) => setAddress(value)}

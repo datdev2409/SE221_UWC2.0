@@ -3,8 +3,8 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
-  onSnapshot
 } from "firebase/firestore"
 import firestore from "./firestore"
 
@@ -14,13 +14,19 @@ export async function createEmployee(employee) {
   console.log("Document written with ID: ", docRef.id)
 }
 
+export async function getEmployee(id) {
+  const docRef = doc(firestore, 'employees', id)
+  const docSnap = await getDoc(docRef)
+
+  return docSnap.data()
+}
+
 export async function getAllEmployees() {
   const employeeCol = collection(firestore, "employees")
   const snapshot = await getDocs(employeeCol)
 
   const employees = []
   snapshot.forEach((doc) => {
-    console.log(doc.data())
     employees.push({ ...doc.data(), id: doc.id })
   })
 

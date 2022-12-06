@@ -20,7 +20,6 @@ export async function getAllMCPs() {
 
   const MCPs = []
   snapshot.forEach((doc) => {
-    console.log(doc.data())
     MCPs.push({ ...doc.data(), id: doc.id })
   })
 

@@ -87,7 +87,7 @@ function Task({ task }) {
       <Divider />
 
       <div className={styles.body}>
-        <TaskRow isHighlight={true} field="Employee:" value={task.employee.split('-')[0]} />
+        <TaskRow isHighlight={true} field="Employee:" value={task.employee} />
         <TaskRow
           field="Start at:"
           value={moment(task.timeStart).format("DD MMM YYYY")}
