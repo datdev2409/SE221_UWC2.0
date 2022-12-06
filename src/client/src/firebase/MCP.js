@@ -4,7 +4,8 @@ import {
   deleteDoc,
   doc,
   getDocs,
-  onSnapshot
+  onSnapshot,
+  getDoc
 } from "firebase/firestore"
 import firestore from "./firestore"
 
@@ -12,6 +13,13 @@ export async function createMCP(MCP) {
   const MCPCol = collection(firestore, "MCPs")
   const docRef = await addDoc(MCPCol, MCP)
   console.log("Document written with ID: ", docRef.id)
+}
+
+export async function getMCP(id) {
+  const docRef = doc(firestore, 'MCPs', id)
+  const docSnap = await getDoc(docRef)
+
+  return docSnap.data()
 }
 
 export async function getAllMCPs() {

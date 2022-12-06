@@ -19,7 +19,7 @@ import { useFormik } from "formik"
 import { useEffect, useState } from "react"
 import useTaskContext from "../../../context/task/taskHook"
 import { createTask } from "../../../context/task/taskActions"
-import { getAllMCPs } from "../../../firebase/MCP"
+import { getAllMCPs, getMCP } from "../../../firebase/MCP"
 import { getAllEmployees, getEmployee } from "../../../firebase/employee"
 
 function TextInput({ formik, label, name }) {
@@ -63,13 +63,14 @@ function AddModal({ open, handleClose }) {
   const [timeStart, setTimeStart] = useState(Date.now())
   const [timeEnd, setTimeEnd] = useState(Date.now())
   const [loading, setLoading] = useState(false)
-  const [address, setAddress] = useState("")
   const [type, setType] = useState("janitor")
   const [MCPList, setMCPList] = useState([])
 
   const [employees, setEmployees] = useState([])
   const [employeeId, setEmployeeId] = useState("")
 
+  const [MCPId, setMCPId] = useState("")
+  const [MCPIds, setMCPIds] = useState([]) //use for collector task
 
   const dispatch = useTaskContext()[1]
 
@@ -92,25 +93,27 @@ function AddModal({ open, handleClose }) {
         employeeId,
         timeStart,
         timeEnd,
-        address,
         type
       }
 
-      getEmployee(employeeId).then(employee => {
-        dispatch(createTask({...task, employee: employee.fullname }))
-        handleClose()
+      console.log(MCPIds)
+      getEmployee(employeeId).then((employee) => {
+        if (type === 'janitor') {
+          getMCP(MCPId).then(MCP => {
+            dispatch(createTask({ ...task, MCPId,  employee: employee.fullname, address: MCP.address }))
+            handleClose()
+          })
+        }
+        else {
+          getMCP(MCPIds[0]).then(MCP => {
+            dispatch(createTask({ ...task, MCPIds, employee: employee.fullname, address: MCP.address }))
+            handleClose()
+          })
+        }
       })
       setTimeout(() => setLoading(false), 1000)
     }
   })
-
-  const handleChangeType = (type) => {
-    // janitor -> collector
-    if (type === "collector") {
-      setAddress([])
-    } else setAddress("")
-    setType(type)
-  }
 
   return (
     <Dialog open={open} onClose={handleClose} fullWidth={true}>
@@ -119,7 +122,7 @@ function AddModal({ open, handleClose }) {
         <h2 style={{ marginBottom: "12px" }}>
           Add {type === "janitor" ? "janitor" : "collector"} task
         </h2>
-        <TypeSelectGroup value={type} handleChange={handleChangeType} />
+        <TypeSelectGroup value={type} handleChange={setType} />
         <TextInput formik={formik} label="Name" name="name" />
         <Box className="flex g-24 mt-12 fx-start">
           <DateInput
@@ -130,48 +133,60 @@ function AddModal({ open, handleClose }) {
           <DateInput value={timeEnd} label="End" handleChange={setTimeEnd} />
         </Box>
 
-        <FormControl fullWidth sx={{marginTop: '12px'}}>
+        <FormControl fullWidth sx={{ marginTop: "12px" }}>
           <InputLabel id="employee-label">Employee</InputLabel>
           <Select
             labelId="employee-label"
-            label='Employee'
+            label="Employee"
             // sx={{marginTop: '12px'}}
             value={employeeId}
             onChange={(e) => setEmployeeId(e.target.value)}>
             {employees.map(({ id, fullname }) => (
-              <MenuItem key={id} value={id}>{fullname}</MenuItem>
+              <MenuItem key={id} value={id}>
+                {fullname}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
 
-        <Autocomplete
-          hidden={type === "janitor"}
-          multiple
-          sx={{ marginTop: "12px" }}
-          options={MCPList.map((MCP) => MCP.name)}
-          renderInput={(params) => <TextField {...params} label="Location" />}
-          defaultValue={[]}
-          onChange={(e, value) => setAddress(value)}
-        />
+        <Box hidden={type==='collector'}>
+          <FormControl
+            fullWidth
+            sx={{ marginTop: "12px" }}>
+            <InputLabel id="mcp-label">MCP</InputLabel>
+            <Select
+              labelId="mcp-label"
+              label="MCP"
+              value={MCPId}
+              onChange={(e) => setMCPId(e.target.value)}>
+              {MCPList.map(({ id, name }) => (
+                <MenuItem key={id} value={id}>
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
 
-        <Autocomplete
-          hidden={type === "collector"}
-          sx={{ marginTop: "12px" }}
-          options={MCPList.map((MCP) => `${MCP.name} - ${MCP.id}`)}
-          renderInput={(params) => <TextField {...params} label="Location" />}
-          defaultValue={""}
-          onChange={(e, value) => setAddress(value)}
-        />
-
-        <Autocomplete
-          hidden={type === "janitor"}
-          multiple
-          sx={{ marginTop: "12px" }}
-          options={MCPList.map((MCP) => `${MCP.name} - ${MCP.id}`)}
-          renderInput={(params) => <TextField {...params} label="Location" />}
-          defaultValue={[]}
-          onChange={(e, value) => setAddress(value)}
-        />
+        <Box hidden={type==='janitor'}>
+          <FormControl
+            fullWidth
+            sx={{ marginTop: "12px" }}>
+            <InputLabel id="mcp-label">MCP</InputLabel>
+            <Select
+              multiple
+              labelId="mcp-label"
+              label="MCP"
+              value={MCPIds}
+              onChange={(e) => setMCPIds(e.target.value)}>
+              {MCPList.map(({ id, name }) => (
+                <MenuItem key={id} value={id}>
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
 
         <TextInput formik={formik} label="Description" name="description" />
       </FormControl>
