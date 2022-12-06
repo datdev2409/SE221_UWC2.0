@@ -59,6 +59,10 @@ body {
   gap: 12px;
 }
 
+.g-24 {
+  gap: 24px;
+}
+
 .mt-12 {
   margin-top: 12px;
 }

@@ -8,7 +8,8 @@ import {
   DialogTitle,
   Divider,
   IconButton,
-  Typography
+  Typography,
+  Chip
 } from "@mui/material"
 import moment from "moment"
 import { deleteTask } from "../../../../context/task/taskActions"
@@ -40,8 +41,15 @@ function Task({ task }) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        {/* <div className={typeClasses}>{task.type}</div> */}
-        <div className={styles.name}>{task.name}</div>
+        <div className="flex g-12" style={{maxWidth: '200px'}}>
+          <Chip
+            size="small"
+            variant="outlined"
+            color={task.type === "janitor" ? "primary" : "success"}
+            label={task.type}
+          />
+          <div className={styles.name}>{task.name}</div>
+        </div>
         <IconButton onClick={() => setDialogOpen(true)} size="small">
           <DeleteOutline color="error" fontSize="inherit" />
         </IconButton>
@@ -51,7 +59,10 @@ function Task({ task }) {
           <DialogTitle>Delete Task</DialogTitle>
           <DialogContent>
             <Alert severity="error">This will permanently delete task.</Alert>
-            <Typography sx={{ fontSize: 12, mt: 2 }}  variant="subtitle1" color="text.secondary">
+            <Typography
+              sx={{ fontSize: 12, mt: 2 }}
+              variant="subtitle1"
+              color="text.secondary">
               Deleted task:
             </Typography>
             <Typography variant="subtitle1">
@@ -76,12 +87,16 @@ function Task({ task }) {
       <Divider />
 
       <div className={styles.body}>
-        <TaskRow isHighlight={true} field="Team:" value={task.team} />
+        <TaskRow isHighlight={true} field="Employee:" value={task.employee.split('-')[0]} />
         <TaskRow
-          field="Time:"
+          field="Start at:"
           value={moment(task.timeStart).format("DD MMM YYYY")}
         />
-        <TaskRow field="Location:" value={task.location} />
+        <TaskRow
+          field="End at:"
+          value={moment(task.timeEnd).format("DD MMM YYYY")}
+        />
+        <TaskRow field="Address:" value={task.address} />
         <TaskRow field="Description:" value={task.description} />
       </div>
     </div>

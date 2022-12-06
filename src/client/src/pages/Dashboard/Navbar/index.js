@@ -3,7 +3,7 @@ import FilterBar from "./FilterBar"
 import ViewMenu from "./ViewMenu"
 import { Add } from "@mui/icons-material"
 import { Button, Box, Snackbar, Alert } from "@mui/material"
-import AddTaskModal from "../../../components/AddTaskModal"
+import AddModal from "../Modal/AddModal"
 
 function Navbar() {
   const [modalOpen, setModalOpen] = useState(false)
@@ -40,7 +40,12 @@ function Navbar() {
         </Button>
       </Box>
 
-      <AddTaskModal
+      {/* <AddTaskModal
+        open={modalOpen}
+        handleClose={closeModel}
+        handleSuccess={handleSaveTask}
+      /> */}
+      <AddModal
         open={modalOpen}
         handleClose={closeModel}
         handleSuccess={handleSaveTask}

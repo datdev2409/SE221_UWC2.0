@@ -60,7 +60,7 @@
   font-weight: 500;
 }
 
-.value {
+.value, .name {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

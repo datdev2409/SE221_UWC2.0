@@ -102,12 +102,12 @@ function AddTaskModal({ open, handleClose, handleSuccess }) {
 
         <Box className="flex g-12 mt-12">
           <DateInput
-            time={timeStart}
+            value={timeStart}
             label="Start date"
             handleChange={setTimeStart}
           />
           <DateInput
-            time={timeEnd}
+            value={timeEnd}
             label="End date"
             handleChange={setTimeEnd}
           />

@@ -9,6 +9,7 @@ import CalendarView from "./pages/Dashboard/CalendarView"
 import Timeline from "./pages/Dashboard/Timeline"
 import MCPManagement from "./pages/MCPManagement"
 import MCPProvider from "./context/MCP/MCPProvider"
+import EmployeeManagement from "./pages/EmployeeManagement"
 
 const router = createRouter([
   {
@@ -36,7 +37,7 @@ const router = createRouter([
 
       {
         path: routes.employee,
-        element: <App />
+        element: <EmployeeManagement />
       },
       {
         path: routes.vehicle,

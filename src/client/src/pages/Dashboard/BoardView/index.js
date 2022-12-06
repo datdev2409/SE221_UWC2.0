@@ -8,7 +8,6 @@ import { setTasks } from "../../../context/task/taskActions"
 function BoardView() {
   let [tasks, dispatch] = useTaskContext()
 
-
   useEffect(() => {
     getAllTasks().then(data => dispatch(setTasks(data)))
   }, [dispatch])

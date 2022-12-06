@@ -13,7 +13,6 @@ export async function getAllTasks() {
 
   const tasks = []
   snapshot.forEach(doc => {
-    console.log(doc.data())
     tasks.push({...doc.data(), id: doc.id})
   })
   
