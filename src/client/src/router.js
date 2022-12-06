@@ -1,12 +1,14 @@
 import routes from "./config/routes"
 import { createBrowserRouter as createRouter } from "react-router-dom"
 
-import App from './App'
-import DefaultLayout from "./layouts/default/DefaultLayout";
+import App from "./App"
+import DefaultLayout from "./layouts/default/DefaultLayout"
 import Dashboard from "./pages/Dashboard"
-import BoardView from "./pages/Dashboard/BoardView";
-import CalendarView from './pages/Dashboard/CalendarView'
-import Timeline from './pages/Dashboard/Timeline'
+import BoardView from "./pages/Dashboard/BoardView"
+import CalendarView from "./pages/Dashboard/CalendarView"
+import Timeline from "./pages/Dashboard/Timeline"
+import MCPManagement from "./pages/MCPManagement"
+import MCPProvider from "./context/MCP/MCPProvider"
 
 const router = createRouter([
   {
@@ -31,6 +33,7 @@ const router = createRouter([
           }
         ]
       },
+
       {
         path: routes.employee,
         element: <App />
@@ -41,7 +44,7 @@ const router = createRouter([
       },
       {
         path: routes.area_mcps,
-        element: <App />
+        element: <MCPProvider><MCPManagement /></MCPProvider>
       }
     ]
   }

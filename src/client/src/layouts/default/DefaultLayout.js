@@ -1,9 +1,7 @@
 import { Outlet } from "react-router-dom"
-import styles from './DefaultLayout.module.css'
 import Sidebar from "../../components/Sidebar/Sidebar"
 import Header from "../../components/Header/Header"
-import Grid2 from '@mui/material/Unstable_Grid2'
-import { Grid, Item } from "@mui/material"
+import { Grid } from "@mui/material"
 
 
 function DefaultLayout() {

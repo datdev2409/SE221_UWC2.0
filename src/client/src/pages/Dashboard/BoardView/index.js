@@ -1,19 +1,17 @@
 import BoardColumn from "./BoardColumn"
 import Task from "./Task"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { getAllTasks } from "../../../firebase/task"
+import useTaskContext from "../../../context/task/taskHook"
+import { setTasks } from "../../../context/task/taskActions"
 
 function BoardView() {
-  let [tasks, setTasks] = useState([])
+  let [tasks, dispatch] = useTaskContext()
+
 
   useEffect(() => {
-    async function fetchTasks() {
-      let data = await getAllTasks()
-      setTasks(data)
-    }
-
-    fetchTasks()
-  }, [])
+    getAllTasks().then(data => dispatch(setTasks(data)))
+  }, [dispatch])
 
   const filterByStatus = (tasks, status) => {
     return tasks.filter((task) => task.status === status)

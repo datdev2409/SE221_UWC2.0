@@ -1,16 +1,20 @@
+import { DeleteOutline } from "@mui/icons-material"
 import {
-  MoreHoriz,
-} from "@mui/icons-material"
-import {
+  Alert,
+  Dialog,
+  DialogContent,
+  Button,
+  DialogActions,
+  DialogTitle,
   Divider,
-  Icon,
-  Menu,
-  MenuItem
+  IconButton,
+  Typography
 } from "@mui/material"
 import moment from "moment"
-import { useState } from "react"
-import { deleteTask } from "../../../../firebase/task"
+import { deleteTask } from "../../../../context/task/taskActions"
 import styles from "./Task.module.css"
+import useTaskContext from "../../../../context/task/taskHook"
+import { useState } from "react"
 
 function TaskRow({ field, value, isHighlight }) {
   if (!value) return <div></div>
@@ -25,13 +29,12 @@ function TaskRow({ field, value, isHighlight }) {
 }
 
 function Task({ task }) {
-  const [anchorEl, setAnchorEl] = useState(null)
-  const open = Boolean(anchorEl)
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
-  const handleClose = () => {
-    setAnchorEl(null)
+  const dispatch = useTaskContext()[1]
+  const [dialogOpen, setDialogOpen] = useState(false)
+
+  const handleDelete = () => {
+    dispatch(deleteTask(task.id))
+    setDialogOpen(false)
   }
 
   return (
@@ -39,15 +42,35 @@ function Task({ task }) {
       <div className={styles.header}>
         {/* <div className={typeClasses}>{task.type}</div> */}
         <div className={styles.name}>{task.name}</div>
-        <Icon onClick={handleClick}>
-          <MoreHoriz />
-        </Icon>
-        <Menu open={open} anchorEl={anchorEl} onClose={handleClose}>
-          <MenuItem color="info">Edit</MenuItem>
-          <MenuItem color="error" onClick={() => deleteTask(task.id)}>
-            Delete
-          </MenuItem>
-        </Menu>
+        <IconButton onClick={() => setDialogOpen(true)} size="small">
+          <DeleteOutline color="error" fontSize="inherit" />
+        </IconButton>
+
+        {/* Confirm delete dialog */}
+        <Dialog fullWidth={true} open={dialogOpen}>
+          <DialogTitle>Delete Task</DialogTitle>
+          <DialogContent>
+            <Alert severity="error">This will permanently delete task.</Alert>
+            <Typography sx={{ fontSize: 12, mt: 2 }}  variant="subtitle1" color="text.secondary">
+              Deleted task:
+            </Typography>
+            <Typography variant="subtitle1">
+              <strong>{task.name}</strong>
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button color="primary" onClick={() => setDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={handleDelete}
+              autoFocus>
+              Start delete
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
 
       <Divider />

@@ -22,7 +22,6 @@ export async function getAllTasks() {
 
 export async function deleteTask(id) {
   try {
-    console.log(id)
     await deleteDoc(doc(firestore, 'tasks', id))
   }
   catch (error) {

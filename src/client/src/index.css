@@ -39,6 +39,10 @@ body {
   justify-content: space-between;
 }
 
+.fx-end {
+  justify-content: flex-end;
+}
+
 .fx-start {
   justify-content: flex-start;
 }
@@ -57,4 +61,18 @@ body {
 
 .mt-12 {
   margin-top: 12px;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.center {
+  text-align: center;
+}
+
+.fy-center {
+  align-items: center;
 }
