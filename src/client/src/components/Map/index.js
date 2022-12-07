@@ -1,44 +1,43 @@
-import React from 'react'
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import React from "react";
+import GoogleMapReact from 'google-map-react';
+import {GOOGLE_MAP_API_KEY} from '../../config/env'
+import { LocationOn } from "@mui/icons-material";
 
-const containerStyle = {
-  width: '100%',
-  height: '400px'
-};
-
-function MyComponent({center}) {
-  console.log(center)
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyB29-zuKEZPel6IZ7_cT__LtQ_SDmcLMjs"
-  })
-
-  const [map, setMap] = React.useState(null)
-
-  const onLoad = React.useCallback(function callback(map) {
-    // This is just an example of getting and using the map instance!!! don't just blindly copy!
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
-
-    setMap(map)
-  }, [])
-
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null)
-  }, [])
-
-  return isLoaded ? (
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={10}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-      >
-        { /* Child components, such as markers, info windows, etc. */ }
-        <></>
-      </GoogleMap>
-  ) : <></>
+function Marker({text}) {
+  return (
+    <div>
+      <LocationOn color="error" fontSize="large"/>
+      {text}
+    </div>
+  )
 }
 
-export default React.memo(MyComponent)
+const AnyReactComponent = ({ text }) => <Marker />;
+
+export default function SimpleMap({lat, lng}){
+  console.log(lat, lng)
+  const defaultProps = {
+    center: {
+      lat: lat || 10.99835602,
+      lng: lng || 77.01502627
+    },
+    zoom: 15
+  };
+
+  return (
+    // Important! Always set the container height explicitly
+    <div style={{ height: '500px', width: '100%' }}>
+      <GoogleMapReact
+        bootstrapURLKeys={{ key: GOOGLE_MAP_API_KEY }}
+        defaultCenter={defaultProps.center}
+        defaultZoom={defaultProps.zoom}
+      >
+        <AnyReactComponent
+          lat={lat || 10.99835602}
+          lng={lng || 10.99835602}
+          text="My Marker"
+        />
+      </GoogleMapReact>
+    </div>
+  );
+}

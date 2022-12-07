@@ -19,11 +19,11 @@ const items = [
     path: "/employee",
     icon: <PeopleAlt />
   },
-  {
-    text: "Vehicle",
-    path: "/vehicle",
-    icon: <LocalShipping />
-  },
+  // {
+  //   text: "Vehicle",
+  //   path: "/vehicle",
+  //   icon: <LocalShipping />
+  // },
   {
     text: "Area & MCPs",
     path: "/area-and-mcps",
