@@ -10,16 +10,13 @@ import {
   IconButton,
   Typography,
   Chip,
-  DialogContentText
 } from "@mui/material"
 import moment from "moment"
 import { deleteTask } from "../../../../context/task/taskActions"
 import styles from "./Task.module.css"
 import useTaskContext from "../../../../context/task/taskHook"
-import { useEffect, useState } from "react"
-import {getDate} from "../../../../utils/dateConvert"
-import SimpleMap from "../../../../components/Map"
-import {getMCP} from '../../../../firebase/MCP'
+import { useState } from "react"
+import TaskModal from "../../Modal/TaskModal"
 
 function TaskRow({ field, value, isHighlight }) {
   if (!value) return <div></div>
@@ -30,33 +27,6 @@ function TaskRow({ field, value, isHighlight }) {
         {value}
       </div>
     </div>
-  )
-}
-
-function TaskModal({ task, open, handleClose }) {
-  const [MCP, setMCP] = useState({})
-
-  useEffect(() => {
-    getMCP(task.MCPId)
-      .then(MCP => setMCP(MCP))
-  }, [task.MCPId])
-
-  return (
-    <Dialog fullWidth open={open} onClose={handleClose}>
-      <DialogTitle>{task.name}</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          Employee: <strong>{task.employee}</strong>
-        </DialogContentText>
-        <DialogContentText>
-          From <strong>{getDate(task.timeStart)}</strong> to <strong>{getDate(task.timeEnd)}</strong>
-        </DialogContentText>
-        <DialogContentText>
-          Address: <strong>{task.address}</strong>
-        </DialogContentText>
-      </DialogContent>
-      <SimpleMap lat={MCP?.location?._lat} lng={MCP?.location?._long} />
-    </Dialog>
   )
 }
 

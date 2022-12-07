@@ -51,7 +51,6 @@ function MCPManagement() {
   })
 
   const viewMCPInfo = (params) => {
-    console.log(params.row)
     setSelectedMCP(params.row)
     setMapOpen(true)
   }
