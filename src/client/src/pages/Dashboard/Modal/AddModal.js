@@ -6,7 +6,6 @@ import {
   TextField,
   Box,
   LinearProgress,
-  Autocomplete,
   FormControlLabel,
   Radio,
   RadioGroup,

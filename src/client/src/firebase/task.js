@@ -24,8 +24,6 @@ export async function getAllTasks() {
       tasks.push({ ...doc.data(), id: doc.id})
   })
 
-  console.log(tasks)
-
   return tasks
 }
 

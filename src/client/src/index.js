@@ -8,14 +8,17 @@ import EmployeeProvider from "./context/employee/EmployeeProvider"
 
 import './index.css'
 import router from './router'
+import { UserProvider } from "./context/user"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   // <React.StrictMode>
-  <EmployeeProvider>
-    <MCPProvider>
-      <RouterProvider router={router} />
-    </MCPProvider>
-  </EmployeeProvider>
+  <UserProvider>
+    <EmployeeProvider>
+      <MCPProvider>
+        <RouterProvider router={router} />
+      </MCPProvider>
+    </EmployeeProvider>
+  </UserProvider>
   // </React.StrictMode>
 )

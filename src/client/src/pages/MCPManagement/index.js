@@ -1,4 +1,4 @@
-import { Button, Box } from "@mui/material"
+import { Button, Box, Dialog } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { DataGrid } from "@mui/x-data-grid"
 import { setMCPs } from "../../context/MCP/MCPActions"
@@ -8,9 +8,28 @@ import { Add } from "@mui/icons-material"
 import moment from "moment"
 import AddMCPModal from "../../components/AddMCPModal"
 
+function MapModal({ open, handleClose, MCP }) {
+  const API_KEY = "AIzaSyB29-zuKEZPel6IZ7_cT__LtQ_SDmcLMjs"
+  return (
+    <Dialog fullWidth maxWidth='md' open={open} onClose={handleClose}>
+      <iframe
+        tilte="map"
+        width="100%"
+        height="600"
+        // style="border:0"
+        loading="lazy"
+        // center={`${MCP.location._lat},${MCP.location._lng}`}
+        src={`https://www.google.com/maps/embed/v1/place?key=${API_KEY}
+    &q=${MCP?.address}`}></iframe>
+    </Dialog>
+  )
+}
+
 function MCPManagement() {
   const [MCPs, dispatch] = useMCPContext()
+  const [selectedMCP, setSelectedMCP] = useState(null)
   const [isModalOpen, setModalOpen] = useState(false)
+  const [isMapOpen, setMapOpen] = useState(false)
 
   useEffect(() => {
     getAllMCPs().then((MCPs) => dispatch(setMCPs(MCPs)))
@@ -24,12 +43,18 @@ function MCPManagement() {
   ]
 
   const rows = MCPs.map((MCP) => {
-    console.log(moment(MCP.last_cleaned))
+    console.log(MCP)
     return {
       ...MCP,
       last_cleaned: moment(MCP.last_cleaned).format("DD MMM YYYY")
     }
   })
+
+  const viewMCPInfo = (params) => {
+    console.log(params.row)
+    setSelectedMCP(params.row)
+    setMapOpen(true)
+  }
 
   return (
     <div style={{ padding: 12 }}>
@@ -42,13 +67,14 @@ function MCPManagement() {
         </Button>
       </Box>
       <AddMCPModal open={isModalOpen} handleClose={() => setModalOpen(false)} />
+      <MapModal MCP={selectedMCP} open={isMapOpen} handleClose={() => setMapOpen(false)} />
       <Box sx={{ width: "100%", height: 400 }}>
         <DataGrid
+          onRowClick={viewMCPInfo}
           columns={columns}
           rows={rows}
           pageSize={5}
           rowsPerPageOptions={[5]}
-          checkboxSelection
         />
       </Box>
     </div>

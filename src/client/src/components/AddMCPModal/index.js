@@ -17,6 +17,20 @@ import { createMCP } from "../../context/MCP/MCPActions"
 import { LocationOn } from "@mui/icons-material"
 import { GeoPoint } from "firebase/firestore"
 
+function MapModal({ keyword }) {
+  const API_KEY = "AIzaSyB29-zuKEZPel6IZ7_cT__LtQ_SDmcLMjs"
+  return (
+      <iframe
+        tilte="map"
+        width="100%"
+        height="300"
+        // style="border:0"
+        loading="lazy"
+        src={`https://www.google.com/maps/embed/v1/search?key=${API_KEY}
+    &q=${keyword ? keyword : ''}`}></iframe>
+  )
+}
+
 function HintItem({ hint, setLocation, setAddress }) {
   const handleClick = () => {
     setAddress(hint.formatted_address)
@@ -109,6 +123,8 @@ function AddMCPModal({ open, handleClose }) {
             />
           ))}
         </List>
+        {address && <MapModal keyword={address} />}
+        
       </Box>
       <DialogActions>
         <Button onClick={handleClose}>Close</Button>

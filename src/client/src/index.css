@@ -73,10 +73,17 @@ body {
   text-overflow: ellipsis;
 }
 
-.center {
+.fx-center {
   text-align: center;
 }
 
 .fy-center {
   align-items: center;
+}
+
+.form-center {
+  width: 500px;
+  /* text-align: center; */
+  margin: 100px auto;
+  padding: 24px;
 }

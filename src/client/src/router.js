@@ -10,6 +10,9 @@ import Timeline from "./pages/Dashboard/Timeline"
 import MCPManagement from "./pages/MCPManagement"
 import MCPProvider from "./context/MCP/MCPProvider"
 import EmployeeManagement from "./pages/EmployeeManagement"
+import RegisterPage from "./pages/Dashboard/Register"
+import LoginPage from "./pages/Dashboard/Login"
+import PrivateRoute from "./components/PrivateRoute"
 
 const router = createRouter([
   {
@@ -18,7 +21,7 @@ const router = createRouter([
     children: [
       {
         path: routes.dashboard,
-        element: <Dashboard />,
+        element: <PrivateRoute><Dashboard /></PrivateRoute>,
         children: [
           {
             path: routes.dashboard__board,
@@ -37,7 +40,7 @@ const router = createRouter([
 
       {
         path: routes.employee,
-        element: <EmployeeManagement />
+        element: <PrivateRoute><EmployeeManagement /></PrivateRoute>
       },
       {
         path: routes.vehicle,
@@ -45,9 +48,17 @@ const router = createRouter([
       },
       {
         path: routes.area_mcps,
-        element: <MCPProvider><MCPManagement /></MCPProvider>
+        element: <PrivateRoute><MCPManagement /></PrivateRoute>
       }
     ]
+  },
+  {
+    path: '/register',
+    element: <RegisterPage />
+  },
+  {
+    path: '/login',
+    element: <LoginPage />
   }
 ])
 
