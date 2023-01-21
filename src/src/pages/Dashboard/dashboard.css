@@ -1,0 +1,80 @@
+.filterBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px;
+}
+
+.views {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* gap: 24px; */
+  /* border-bottom: 3px solid black; */
+}
+
+.viewItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* gap: 8px; */
+  font-size: 14px;
+  font-weight: 500;
+
+  padding: 6px;
+
+  cursor: pointer;
+  border-bottom: 3px solid #ddd;
+
+  text-decoration: none;
+  color: var(--text);
+}
+
+.viewItem div {
+  padding: 0 24px 0 6px;
+  font-weight: 13px;
+}
+
+.viewItem:hover {
+  color: var(--text);
+  background-color: #eee;
+  /* border-bottom: 3px solid var(--text); */
+}
+
+.viewActive {
+  color: var(--text);
+  border-bottom: 3px solid var(--text);
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.filter {
+  padding: 3px 6px;
+  border-radius: 5px;
+  border: 2px solid #333;
+  background: #fff;
+}
+
+.filterBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+
+  padding: 3px 12px;
+
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+
+  color: #fff;
+  background-color: var(--primary);
+  border-radius: 5px;
+
+  cursor: pointer;
+}
